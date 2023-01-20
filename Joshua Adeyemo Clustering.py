@@ -71,6 +71,7 @@ df_clust = df_clust.dropna()
 print(df_clust)
 
 #create a scatter plot of the data
+plt.rcParams.update({'font.size': 20})
 plt.figure(figsize=(10,10))
 plt.scatter(df_clust['1960'], df_clust['2020'])
 plt.xlabel('1960')
