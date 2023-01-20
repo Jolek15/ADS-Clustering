@@ -208,7 +208,7 @@ plt.show()
 
 #plot the bar chart
 plt.figure(figsize=(10,10))
-plt.bar([1,2,3,4,5,6], [first_cluster['1960'].mean(), first_cluster['2020'].mean(), second_cluster['1960'].mean(), second_cluster['2020'].mean(), third_cluster['1960'].mean(), third_cluster['2020'].mean()], tick_label = ['1960 cluster1', '2020 cluster1', '1960 cluster2',  '2020 cluster2', '1960 cluster3', '2020 cluster3'])
+plt.bar([1,2,3,4,5,6], [first_cluster['1960'].mean(), first_cluster['2020'].mean(), second_cluster['1960'].mean(), second_cluster['2020'].mean(), third_cluster['1960'].mean(), third_cluster['2020'].mean()], tick_label = ['1960 cluster0', '2020 cluster0', '1960 cluster1',  '2020 cluster1', '1960 cluster2', '2020 cluster2'])
 plt.xlabel('Clusters')
 plt.ylabel('Mean GDP')
 plt.xticks(rotation=45)
