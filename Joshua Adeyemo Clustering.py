@@ -71,6 +71,7 @@ df_clust = df_clust.dropna()
 print(df_clust)
 
 #create a scatter plot of the data
+plt.figure(figsize=(10,10))
 plt.scatter(df_clust['1960'], df_clust['2020'])
 plt.xlabel('1960')
 plt.ylabel('2020')
@@ -90,6 +91,7 @@ for i in k_rng:
 print(sse)
 
 #plot the elbow graph
+plt.figure(figsize=(10,10))
 plt.plot(k_rng, sse)
 plt.xlabel('No of Clusters')
 plt.ylabel('Sum of squared error')
@@ -120,9 +122,10 @@ df2 = X[X.cluster==1]
 df3 = X[X.cluster==2]
 
 #create a scatter plot for each cluster
-plt.scatter(df1['1960'], df1['2020'], color='green')
-plt.scatter(df2['1960'], df2['2020'], color='black')
-plt.scatter(df3['1960'], df3['2020'], color='red')
+plt.figure(figsize=(10,10))
+plt.scatter(df1['1960'], df1['2020'], color='green', label = 'cluster 0')
+plt.scatter(df2['1960'], df2['2020'], color='black', label = 'cluster 1')
+plt.scatter(df3['1960'], df3['2020'], color='red', label = 'cluster 2')
 
 plt.xlabel('1960')
 plt.ylabel('2020')
@@ -166,6 +169,7 @@ df2 = X[X.cluster==1]
 df3 = X[X.cluster==2]
 
 #visualising the clusters and centroids
+plt.figure(figsize=(10,10))
 plt.scatter(df1['1960'], df1['2020'], color='green', label = 'cluster 0')
 plt.scatter(df2['1960'], df2['2020'], color='black', label = 'cluster 1')
 plt.scatter(df3['1960'], df3['2020'], color='red', label = 'cluster 2')
@@ -199,15 +203,18 @@ plt.figure(figsize=(8,5))
 sns.heatmap(new_X.corr(),annot=True)
 plt.title('Correlation heatmap of GDP from 1960 to 2020')
 plt.savefig('corr.png')
+plt.legend()
 plt.show()
 
 #plot the bar chart
+plt.figure(figsize=(10,10))
 plt.bar([1,2,3,4,5,6], [first_cluster['1960'].mean(), first_cluster['2020'].mean(), second_cluster['1960'].mean(), second_cluster['2020'].mean(), third_cluster['1960'].mean(), third_cluster['2020'].mean()], tick_label = ['1960 cluster1', '2020 cluster1', '1960 cluster2',  '2020 cluster2', '1960 cluster3', '2020 cluster3'])
 plt.xlabel('Clusters')
 plt.ylabel('Mean GDP')
 plt.xticks(rotation=45)
 plt.title('Comparison of developments in clusters using their mean')
 plt.savefig('clusters_bar.png')
+plt.legend()
 plt.show()
 
 #using united states as a case study we extract USA data
@@ -215,25 +222,22 @@ usa_df = gdp_file[gdp_file['Country Name'] == 'United States']
 print(usa_df)
 
 #cleaning the data and extracing what we need
-usa_df = usa_df.drop(usa_df.loc[:, 'Country Code':'Indicator Code'].columns,axis = 1)
-
-m = usa_df.T
-headers = m.iloc[0]
+m = usa_df[['1960','1980','2000','2010','2021']].copy()
 #Create DataFrame
-df_new = pd.DataFrame(m.values[1:], columns=headers)
-print(df_new)
-
-#Insert year column
-df_new.insert(0, "Year", ['1960', '1961', '1962', '1963', '1964', '1965', '1966', '1967', '1968', '1969','1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979','1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989','1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021'], True)
-
+df_new = m.T
+df_new.index = df_new.index.set_names('Year')
+df_new.columns = ['GDP']
+df_new.reset_index()
 print(df_new)
 
 #line plot showing U.S.A GDP growth over the years
-plt.plot(df_new['Year'], df_new['United States'], label='Data')
+plt.figure(figsize=(10,10))
+plt.plot(df_new.index, df_new['GDP'])
 plt.xlabel('Year')
 plt.ylabel('GDP')
-plt.title('USA GDP growth')
+plt.title('USA GDP growth analysis from 1960 to 2021')
 plt.savefig('chart.png')
+plt.legend()
 plt.show()
 
 
